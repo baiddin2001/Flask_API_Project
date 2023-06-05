@@ -27,8 +27,15 @@ class MyAppTests(unittest.TestCase):
         response = self.app.put(f"/agents/{agent_id}", json=data)
         self.assertEqual(response.status_code, 200)
         self.assertTrue("agent updated successfully" in response.data.decode())
-        # Add additional assertions if needed
-        
+    
+
+#TEST DELETE
+    def test_delete_agent(self):
+        agent_id = 5  
+        response = self.app.delete(f"/agents/{agent_id}")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("agent deleted successfully" in response.data.decode())
+     
         
             
 if __name__ == "__main__":

@@ -98,6 +98,20 @@ def update_agent(id):
         ),
         200,
     )
+#DELETE
+@app.route("/agents/<int:id>", methods=["DELETE"])
+def delete_agent(id):
+    cur = mysql.connection.cursor()
+    cur.execute(""" DELETE FROM agents where AGENT_CODE = %s """, (id,))
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(
+        jsonify(
+            {"message": "agent deleted successfully", "rows_affected": rows_affected}
+        ),
+        200,
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
