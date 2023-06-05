@@ -51,6 +51,53 @@ def get_customerOrder_by_agents(id):
     return make_response(
         jsonify({"AGENT_CODE": id, "count": len(data), "CUSTOMER_ORDER": data}), 200
     )
+#CREATE
+@app.route("/agents", methods=["POST"])
+def add_agents():
+    cur = mysql.connection.cursor()
+    info = request.get_json()
+    agent_name = info["agent_name"]
+    work_area = info["work_area"]
+    phone_no = info["phone_no"]
+    country = info["country"]
+    cur.execute(
+        """ INSERT IGNORE INTO agents (AGENT_NAME, WORKING_AREA, PHONE_NO, COUNTRY) VALUE (%s, %s, %s, %s)""",
+        (agent_name, work_area, phone_no, country),
+    )
+    mysql.connection.commit()
+    print("row(s) affected :{}".format(cur.rowcount))
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(
+        jsonify(
+            {"message": "agent added sucessfully", "rows_affected": rows_affected}
+        ),
+        201,
+    )
+#UPDATE
+@app.route("/agents/<int:id>", methods=["PUT"])
+def update_agent(id):
+    cur = mysql.connection.cursor()
+    info = request.get_json()
+    agent_name = info["agent_name"]
+    work_area = info["work_area"]
+    phone_no = info["phone_no"]
+    country = info["country"]
+    cur.execute(
+        """
+    UPDATE agents SET AGENT_NAME = %s, WORKING_AREA = %s,  PHONE_NO = %s,  COUNTRY = %s WHERE AGENT_CODE = %s
+    """,
+        (agent_name, work_area, phone_no, country, id),
+    )
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(
+        jsonify(
+            {"message": "agent updated successfully", "rows_affected": rows_affected}
+        ),
+        200,
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
