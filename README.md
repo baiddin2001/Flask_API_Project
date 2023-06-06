@@ -15,7 +15,8 @@ for Installing Black:
  
  For Downloading a Postman for client head over to this website: https://www.postman.com/downloads/?utm_source=postman-home
  
- For the Web Application I am using MySQL Workbench version 8.0 for connecting to my database.
+ For the Web Application I am using MySQL Workbench version 8.0 for connecting to my database.  For Downloading MySQL Workbench head over to this website: https://dev.mysql.com/downloads/installer/
+ 
  I also Install Neovim to creaate .gitignore
  
 For creating an environment I used this syntax in my terminal:
